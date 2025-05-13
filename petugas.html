@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Petugas - Sistem Lelang Online</title>
+  <script src="https://cdn.tailwindcss.com?v=3.4.17"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+              950: '#082f49',
+            },
+            secondary: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+              950: '#2e1065',
+            },
+            accent: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              300: '#fdba74',
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c',
+              800: '#9a3412',
+              900: '#7c2d12',
+              950: '#431407',
+            },
+          },
+          borderRadius: {
+            'xl': '1rem',
+            '2xl': '1.5rem',
+          },
+          boxShadow: {
+            'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
+            'hover': '0 10px 25px rgba(0, 0, 0, 0.1)',
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <nav class="bg-gradient-to-r from-primary-700 to-primary-800 text-white shadow-md">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <div class="flex items-center">
+          <div class="h-10 w-10 bg-white rounded-lg flex items-center justify-center shadow-md mr-3">
+            <span class="text-primary-700 text-lg font-bold">SLO</span>
+          </div>
+          <span class="font-bold text-xl">Sistem Lelang Online</span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <a href="dashboard.html" class="text-white hover:text-blue-200 transition-colors duration-200">Dashboard</a>
+          <span id="userInfo" class="text-sm bg-white/20 py-1 px-3 rounded-full"></span>
+          <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md">Logout</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8 text-gray-800">Menu Petugas</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+      <div class="bg-white rounded-xl shadow-soft p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+          Registrasi Barang
+        </h2>
+        <form id="barangForm">
+          <div class="mb-4">
+            <label for="namaBarang" class="block text-gray-700 text-sm font-medium mb-2">Nama Barang</label>
+            <input type="text" id="namaBarang" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200">
+          </div>
+          <div class="mb-4">
+            <label for="deskripsi" class="block text-gray-700 text-sm font-medium mb-2">Deskripsi</label>
+            <textarea id="deskripsi" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"></textarea>
+          </div>
+          <div class="mb-4">
+            <label for="hargaAwal" class="block text-gray-700 text-sm font-medium mb-2">Harga Awal (Rp)</label>
+            <input type="number" id="hargaAwal" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200">
+          </div>
+          <div class="mb-4">
+            <label for="tanggal" class="block text-gray-700 text-sm font-medium mb-2">Tanggal</label>
+            <input type="date" id="tanggal" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200">
+          </div>
+          <div class="mb-6">
+            <label for="gambarBarang" class="block text-gray-700 text-sm font-medium mb-2">Foto Barang</label>
+            <div class="flex items-center justify-center w-full">
+              <label for="gambarBarang" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-200 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition-all duration-200">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6" id="uploadPlaceholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mb-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  </svg>
+                  <p class="mb-1 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau drag and drop</p>
+                  <p class="text-xs text-gray-500">PNG, JPG atau JPEG (Maks. 2MB)</p>
+                </div>
+                <div id="imagePreviewContainer" class="hidden w-full h-full relative">
+                  <img id="imagePreview" class="w-full h-full object-contain" src="#" alt="Preview">
+                  <button type="button" id="removeImage" class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+                <input id="gambarBarang" type="file" class="hidden" accept="image/png, image/jpeg, image/jpg" />
+              </label>
+            </div>
+          </div>
+          <div class="mb-6">
+            <label for="gambarURL" class="block text-gray-700 text-sm font-medium mb-2">Atau Gunakan URL Gambar</label>
+            <input type="url" id="gambarURL" placeholder="https://example.com/image.jpg" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200">
+            <p class="text-xs text-gray-500 mt-1">Masukkan URL gambar dari internet</p>
+          </div>
+          <button type="submit" class="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white px-6 py-3 rounded-xl hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 font-medium">
+            Simpan Barang
+          </button>
+        </form>
+      </div>
+      
+      <div class="bg-white rounded-xl shadow-soft p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          Kelola Lelang
+        </h2>
+        <div class="mb-4">
+          <label for="selectBarang" class="block text-gray-700 text-sm font-medium mb-2">Pilih Barang</label>
+          <select id="selectBarang" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200">
+            <option value="">-- Pilih Barang --</option>
+          </select>
+        </div>
+        <div id="barangDetail" class="mb-6 p-5 bg-gray-50 rounded-xl hidden">
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="md:w-1/3">
+              <img id="detailGambar" src="assets/img/no-image.png" alt="Gambar Barang" class="w-full h-40 object-cover rounded-lg">
+            </div>
+            <div class="md:w-2/3">
+              <h3 id="detailNamaBarang" class="font-medium text-lg mb-1"></h3>
+              <p id="detailDeskripsi" class="text-gray-600 text-sm mb-3"></p>
+              <div class="flex justify-between mb-2">
+                <span id="detailHarga" class="font-medium"></span>
+                <span id="detailTanggal" class="text-sm text-gray-500"></span>
+              </div>
+              <div id="detailStatus" class="mt-2"></div>
+            </div>
+          </div>
+        </div>
+        <div class="flex space-x-3">
+          <button id="bukaLelangBtn" class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-3 rounded-xl hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed">
+            Buka Lelang
+          </button>
+          <button id="tutupLelangBtn" class="flex-1 bg-gradient-to-r from-red-600 to-red-700 text-white px-4 py-3 rounded-xl hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed">
+            Tutup Lelang
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-white rounded-xl shadow-soft overflow-hidden">
+      <div class="p-6 border-b">
+        <h2 class="text-xl font-semibold text-gray-800 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+          </svg>
+          Daftar Barang & Lelang
+        </h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Barang</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Harga Awal</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Penawaran Tertinggi</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="auctionsList" class="bg-white divide-y divide-gray-200">
+            <!-- Data lelang akan ditampilkan di sini -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/data.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Cek status login
+      const currentUser = checkLoginStatus();
+      if (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'petugas')) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // Tampilkan info user
+      document.getElementById('userInfo').textContent = `${currentUser.nama} (${currentUser.role})`;
+
+      // Load data barang untuk dropdown
+      loadBarangDropdown();
+      
+      // Load daftar lelang
+      loadAuctionsList();
+
+      // Event listener untuk form barang
+      document.getElementById('barangForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        saveBarang();
+      });
+
+      // Event listener untuk dropdown barang
+      document.getElementById('selectBarang').addEventListener('change', function() {
+        showBarangDetail();
+      });
+
+      // Event listener untuk tombol buka lelang
+      document.getElementById('bukaLelangBtn').addEventListener('click', function() {
+        updateLelangStatus('dibuka');
+      });
+
+      // Event listener untuk tombol tutup lelang
+      document.getElementById('tutupLelangBtn').addEventListener('click', function() {
+        updateLelangStatus('ditutup');
+      });
+
+      // Event listener untuk logout
+      document.getElementById('logoutBtn').addEventListener('click', function() {
+        logout();
+        window.location.href = 'index.html';
+      });
+
+      // Event listener untuk upload gambar
+      const gambarInput = document.getElementById('gambarBarang');
+      const imagePreview = document.getElementById('imagePreview');
+      const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+      const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+      const removeImageBtn = document.getElementById('removeImage');
+      const gambarURL = document.getElementById('gambarURL');
+
+      gambarInput.addEventListener('change', function(e) {
+        if (e.target.files.length > 0) {
+          const file = e.target.files[0];
+          
+          // Validasi ukuran file (max 2MB)
+          if (file.size > 2 * 1024 * 1024) {
+            alert('Ukuran file terlalu besar. Maksimal 2MB.');
+            gambarInput.value = '';
+            return;
+          }
+          
+          // Validasi tipe file
+          if (!['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
+            alert('Tipe file tidak didukung. Gunakan PNG, JPG, atau JPEG.');
+            gambarInput.value = '';
+            return;
+          }
+          
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            imagePreview.src = e.target.result;
+            uploadPlaceholder.classList.add('hidden');
+            imagePreviewContainer.classList.remove('hidden');
+            // Kosongkan input URL gambar
+            gambarURL.value = '';
+          }
+          
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Event listener untuk URL gambar
+      gambarURL.addEventListener('input', function() {
+        if (this.value) {
+          // Kosongkan input file
+          gambarInput.value = '';
+          // Sembunyikan preview gambar dari file
+          uploadPlaceholder.classList.remove('hidden');
+          imagePreviewContainer.classList.add('hidden');
+        }
+      });
+
+      removeImageBtn.addEventListener('click', function() {
+        gambarInput.value = '';
+        imagePreview.src = '#';
+        uploadPlaceholder.classList.remove('hidden');
+        imagePreviewContainer.classList.add('hidden');
+      });
+    });
+
+    function saveBarang() {
+      const namaBarang = document.getElementById('namaBarang').value;
+      const deskripsi = document.getElementById('deskripsi').value;
+      const hargaAwal = parseInt(document.getElementById('hargaAwal').value);
+      const tanggal = document.getElementById('tanggal').value;
+      const gambarInput = document.getElementById('gambarBarang');
+      const gambarURL = document.getElementById('gambarURL').value;
+      
+      if (!namaBarang || !deskripsi || isNaN(hargaAwal) || !tanggal) {
+        alert('Nama barang, deskripsi, harga awal, dan tanggal harus diisi!');
+        return;
+      }
+
+      // Prioritaskan URL gambar jika diisi
+      if (gambarURL) {
+        const barang = {
+          id: Date.now().toString(),
+          namaBarang,
+          deskripsi,
+          hargaAwal,
+          tanggal,
+          status: 'pending',
+          penawaranTertinggi: 0,
+          penawar: null,
+          gambar: gambarURL
+        };
+
+        // Simpan barang
+        addAuction(barang);
+        
+        // Reset form
+        document.getElementById('barangForm').reset();
+        document.getElementById('uploadPlaceholder').classList.remove('hidden');
+        document.getElementById('imagePreviewContainer').classList.add('hidden');
+        
+        // Refresh data
+        loadBarangDropdown();
+        loadAuctionsList();
+        
+        alert('Barang berhasil disimpan!');
+        return;
+      }
+      
+      // Jika ada file gambar yang dipilih
+      if (gambarInput.files.length > 0) {
+        const file = gambarInput.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          const barang = {
+            id: Date.now().toString(),
+            namaBarang,
+            deskripsi,
+            hargaAwal,
+            tanggal,
+            status: 'pending',
+            penawaranTertinggi: 0,
+            penawar: null,
+            gambar: e.target.result
+          };
+
+          // Simpan barang
+          addAuction(barang);
+          
+          // Reset form
+          document.getElementById('barangForm').reset();
+          document.getElementById('uploadPlaceholder').classList.remove('hidden');
+          document.getElementById('imagePreviewContainer').classList.add('hidden');
+          
+          // Refresh data
+          loadBarangDropdown();
+          loadAuctionsList();
+          
+          alert('Barang berhasil disimpan!');
+        };
+        
+        reader.readAsDataURL(file);
+      } else {
+        // Jika tidak ada gambar
+        const barang = {
+          id: Date.now().toString(),
+          namaBarang,
+          deskripsi,
+          hargaAwal,
+          tanggal,
+          status: 'pending',
+          penawaranTertinggi: 0,
+          penawar: null,
+          gambar: null
+        };
+
+        // Simpan barang
+        addAuction(barang);
+        
+        // Reset form
+        document.getElementById('barangForm').reset();
+        
+        // Refresh data
+        loadBarangDropdown();
+        loadAuctionsList();
+        
+        alert('Barang berhasil disimpan!');
+      }
+    }
+
+    function loadBarangDropdown() {
+      const auctions = getAuctions();
+      const dropdown = document.getElementById('selectBarang');
+      
+      // Clear dropdown kecuali option pertama
+      while (dropdown.options.length > 1) {
+        dropdown.remove(1);
+      }
+      
+      // Tambahkan barang ke dropdown
+      auctions.forEach(auction => {
+        const option = document.createElement('option');
+        option.value = auction.id;
+        option.textContent = auction.namaBarang;
+        dropdown.appendChild(option);
+      });
+    }
+
+    function showBarangDetail() {
+      const barangId = document.getElementById('selectBarang').value;
+      const detailDiv = document.getElementById('barangDetail');
+      
+      if (!barangId) {
+        detailDiv.classList.add('hidden');
+        document.getElementById('bukaLelangBtn').disabled = true;
+        document.getElementById('tutupLelangBtn').disabled = true;
+        return;
+      }
+      
+      const auction = getAuctionById(barangId);
+      if (auction) {
+        document.getElementById('detailNamaBarang').textContent = auction.namaBarang;
+        document.getElementById('detailDeskripsi').textContent = auction.deskripsi;
+        document.getElementById('detailHarga').textContent = `Rp ${auction.hargaAwal.toLocaleString('id-ID')}`;
+        document.getElementById('detailTanggal').textContent = new Date(auction.tanggal).toLocaleDateString('id-ID');
+        document.getElementById('detailGambar').src = auction.gambar || 'assets/img/no-image.png';
+        
+        const statusEl = document.getElementById('detailStatus');
+        if (auction.status === 'dibuka') {
+          statusEl.innerHTML = '<span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Dibuka</span>';
+          document.getElementById('bukaLelangBtn').disabled = true;
+          document.getElementById('tutupLelangBtn').disabled = false;
+        } else if (auction.status === 'ditutup') {
+          statusEl.innerHTML = '<span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Ditutup</span>';
+          document.getElementById('bukaLelangBtn').disabled = true;
+          document.getElementById('tutupLelangBtn').disabled = true;
+        } else {
+          statusEl.innerHTML = '<span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Pending</span>';
+          document.getElementById('bukaLelangBtn').disabled = false;
+          document.getElementById('tutupLelangBtn').disabled = true;
+        }
+        
+        detailDiv.classList.remove('hidden');
+      }
+    }
+
+    function updateLelangStatus(status) {
+      const barangId = document.getElementById('selectBarang').value;
+      if (!barangId) return;
+      
+      updateAuctionStatus(barangId, status);
+      
+      // Refresh data
+      showBarangDetail();
+      loadAuctionsList();
+      
+      alert(`Status lelang berhasil ${status === 'dibuka' ? 'dibuka' : 'ditutup'}!`);
+    }
+
+    function loadAuctionsList() {
+      const auctions = getAuctions();
+      const tableBody = document.getElementById('auctionsList');
+      tableBody.innerHTML = '';
+
+      if (auctions.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
+            Belum ada data lelang
+          </td>
+        `;
+        tableBody.appendChild(row);
+        return;
+      }
+      
+      auctions.forEach(auction => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 h-10 w-10">
+                <img class="h-10 w-10 rounded-md object-cover" src="${auction.gambar || 'assets/img/no-image.png'}" alt="${auction.namaBarang}">
+              </div>
+              <div class="ml-4">
+                <div class="text-sm font-medium text-gray-900">${auction.namaBarang}</div>
+                <div class="text-sm text-gray-500">${auction.deskripsi.substring(0, 50)}${auction.deskripsi.length > 50 ? '...' : ''}</div>
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp ${auction.hargaAwal.toLocaleString('id-ID')}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(auction.tanggal).toLocaleDateString('id-ID')}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${auction.status === 'dibuka' ? 'bg-green-100 text-green-800' : auction.status === 'ditutup' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}">
+              ${auction.status === 'dibuka' ? 'Dibuka' : auction.status === 'ditutup' ? 'Ditutup' : 'Pending'}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            ${auction.penawaranTertinggi > 0 ? 'Rp ' + auction.penawaranTertinggi.toLocaleString('id-ID') : '-'}
+            ${auction.penawar ? '<br><span class="text-xs text-gray-500">oleh ' + auction.penawar + '</span>' : ''}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <button onclick="deleteAuction('${auction.id}')" class="text-red-600 hover:text-red-900 transition-colors duration-200">Hapus</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function deleteAuction(id) {
+      if (confirm('Apakah Anda yakin ingin menghapus barang ini?')) {
+        removeAuction(id);
+        loadBarangDropdown();
+        loadAuctionsList();
+        alert('Barang berhasil dihapus!');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Masyarakat - Sistem Lelang Online</title>
+  <script src="https://cdn.tailwindcss.com?v=3.4.17"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+              950: '#082f49',
+            },
+            secondary: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+              950: '#2e1065',
+            },
+            accent: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              300: '#fdba74',
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c',
+              800: '#9a3412',
+              900: '#7c2d12',
+              950: '#431407',
+            },
+          },
+          borderRadius: {
+            'xl': '1rem',
+            '2xl': '1.5rem',
+          },
+          boxShadow: {
+            'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
+            'hover': '0 10px 25px rgba(0, 0, 0, 0.1)',
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <nav class="bg-gradient-to-r from-purple-700 to-purple-800 text-white shadow-md">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <div class="flex items-center">
+          <div class="h-10 w-10 bg-white rounded-lg flex items-center justify-center shadow-md mr-3">
+            <span class="text-purple-700 text-lg font-bold">SLO</span>
+          </div>
+          <span class="font-bold text-xl">Sistem Lelang Online</span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <a href="dashboard.html" class="text-white hover:text-purple-200 transition-colors duration-200">Dashboard</a>
+          <span id="userInfo" class="text-sm bg-white/20 py-1 px-3 rounded-full"></span>
+          <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md">Logout</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8 text-gray-800">Menu Masyarakat</h1>
+    
+    <div class="mb-10">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          Lelang yang Sedang Berlangsung
+        </h2>
+        <div class="relative">
+          <input type="text" id="searchAuction" placeholder="Cari barang lelang..." class="pl-10 pr-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute left-3 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="activeAuctions">
+        <!-- Lelang aktif akan ditampilkan di sini -->
+        <div class="text-center py-12 col-span-full bg-white rounded-xl shadow-soft">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+          </svg>
+          <p class="text-gray-500">Memuat data lelang...</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-white rounded-xl shadow-soft overflow-hidden">
+      <div class="p-6 border-b">
+        <h2 class="text-xl font-semibold text-gray-800 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          Riwayat Penawaran Anda
+        </h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Barang</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Harga Awal</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Penawaran Anda</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+            </tr>
+          </thead>
+          <tbody id="bidHistory" class="bg-white divide-y divide-gray-200">
+            <!-- Riwayat penawaran akan ditampilkan di sini -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div class="mt-8 text-center">
+      <button id="resetDataBtn" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl transition-all duration-200 font-medium">
+        Reset Data Lelang
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal Penawaran -->
+  <div id="bidModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold" id="modalTitle">Buat Penawaran</h3>
+        <button id="closeModal" class="text-gray-500 hover:text-gray-700 transition-colors duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div id="modalContent">
+        <div class="mb-6">
+          <img id="modalGambar" src="assets/img/no-image.png" alt="Gambar Barang" class="w-full h-48 object-cover rounded-lg mb-4">
+          <div class="p-4 bg-gray-50 rounded-lg">
+            <p id="modalBarang" class="font-medium text-lg mb-1"></p>
+            <p id="modalDeskripsi" class="text-sm text-gray-600 mb-3"></p>
+            <div class="flex justify-between">
+              <span id="modalHargaAwal" class="text-sm"></span>
+              <span id="modalPenawaranTertinggi" class="text-sm font-medium"></span>
+            </div>
+          </div>
+        </div>
+        <form id="bidForm">
+          <input type="hidden" id="auctionId">
+          <div class="mb-6">
+            <label for="bidAmount" class="block text-gray-700 text-sm font-medium mb-2">Jumlah Penawaran (Rp)</label>
+            <input type="number" id="bidAmount" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200">
+            <p class="text-xs text-gray-500 mt-1">Penawaran harus lebih tinggi dari harga awal dan penawaran tertinggi saat ini.</p>
+          </div>
+          <div class="flex justify-end">
+            <button type="submit" class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-6 py-3 rounded-xl hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all duration-200 font-medium">
+              Kirim Penawaran
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/data.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Cek status login
+      const currentUser = checkLoginStatus();
+      if (!currentUser || currentUser.role !== 'masyarakat') {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // Tampilkan info user
+      document.getElementById('userInfo').textContent = `${currentUser.nama} (${currentUser.role})`;
+
+      // Load lelang aktif
+      loadActiveAuctions();
+      
+      // Load riwayat penawaran
+      loadBidHistory();
+
+      // Event listener untuk form penawaran
+      document.getElementById('bidForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        submitBid();
+      });
+
+      // Event listener untuk tombol tutup modal
+      document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('bidModal').classList.add('hidden');
+      });
+
+      // Event listener untuk logout
+      document.getElementById('logoutBtn').addEventListener('click', function() {
+        logout();
+        window.location.href = 'index.html';
+      });
+
+      // Event listener untuk pencarian
+      document.getElementById('searchAuction').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        loadActiveAuctions(searchTerm);
+      });
+      
+      // Event listener untuk reset data
+      document.getElementById('resetDataBtn').addEventListener('click', function() {
+        if (confirm('Apakah Anda yakin ingin mereset semua data lelang? Ini akan menghapus semua data lelang dan penawaran yang ada.')) {
+          resetAuctionData();
+          alert('Data lelang berhasil direset!');
+          window.location.reload();
+        }
+      });
+    });
+
+    function loadActiveAuctions(searchTerm = '') {
+      let auctions = getAuctions().filter(auction => auction.status === 'dibuka');
+      
+      // Filter berdasarkan pencarian jika ada
+      if (searchTerm) {
+        auctions = auctions.filter(auction => 
+          auction.namaBarang.toLowerCase().includes(searchTerm) || 
+          auction.deskripsi.toLowerCase().includes(searchTerm)
+        );
+      }
+      
+      const container = document.getElementById('activeAuctions');
+      container.innerHTML = '';
+
+      if (auctions.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 col-span-full bg-white rounded-xl shadow-soft">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+            </svg>
+            <p class="text-gray-500">Tidak ada lelang yang sedang berlangsung saat ini.</p>
+          </div>
+        `;
+        return;
+      }
+      
+      auctions.forEach(auction => {
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-xl shadow-soft overflow-hidden transform transition-all duration-300 hover:shadow-hover';
+        
+        // Preload image to check if it loads correctly
+        const img = new Image();
+        img.onload = function() {
+          // Image loaded successfully
+          console.log("Image loaded successfully:", auction.gambar);
+        };
+        img.onerror = function() {
+          // Image failed to load, use fallback
+          console.log("Image failed to load:", auction.gambar);
+          auction.gambar = 'assets/img/no-image.png';
+        };
+        if (auction.gambar) {
+          img.src = auction.gambar;
+        }
+        
+        card.innerHTML = `
+          <div class="relative">
+            <img src="${auction.gambar || 'assets/img/no-image.png'}" alt="${auction.namaBarang}" class="w-full h-48 object-cover" onerror="this.src='assets/img/no-image.png'">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/0 to-black/60"></div>
+            <div class="absolute bottom-0 left-0 p-4 text-white">
+              <h3 class="font-semibold text-lg">${auction.namaBarang}</h3>
+            </div>
+          </div>
+          <div class="p-5">
+            <p class="text-gray-600 text-sm mb-4">${auction.deskripsi.substring(0, 100)}${auction.deskripsi.length > 100 ? '...' : ''}</p>
+            <div class="flex justify-between items-center mb-4">
+              <div>
+                <p class="text-sm text-gray-500">Harga Awal</p>
+                <p class="text-lg font-semibold text-purple-700">Rp ${auction.hargaAwal.toLocaleString('id-ID')}</p>
+              </div>
+              ${auction.penawaranTertinggi > 0 ? `
+                <div class="text-right">
+                  <p class="text-sm text-gray-500">Penawaran Tertinggi</p>
+                  <p class="text-lg font-semibold text-green-600">Rp ${auction.penawaranTertinggi.toLocaleString('id-ID')}</p>
+                </div>
+              ` : ''}
+            </div>
+            <button onclick="openBidModal('${auction.id}')" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-3 rounded-xl hover:from-purple-700 hover:to-purple-800 transition duration-200 font-medium">
+              Buat Penawaran
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function openBidModal(auctionId) {
+      const auction = getAuctionById(auctionId);
+      if (!auction) return;
+      
+      document.getElementById('modalBarang').textContent = auction.namaBarang;
+      document.getElementById('modalDeskripsi').textContent = auction.deskripsi;
+      document.getElementById('modalHargaAwal').textContent = `Harga Awal: Rp ${auction.hargaAwal.toLocaleString('id-ID')}`;
+      document.getElementById('modalPenawaranTertinggi').textContent = auction.penawaranTertinggi > 0 
+        ? `Penawaran Tertinggi: Rp ${auction.penawaranTertinggi.toLocaleString('id-ID')}` 
+        : 'Belum ada penawaran';
+      
+      const modalGambar = document.getElementById('modalGambar');
+      modalGambar.src = auction.gambar || 'assets/img/no-image.png';
+      modalGambar.onerror = function() {
+        this.src = 'assets/img/no-image.png';
+      };
+      
+      document.getElementById('auctionId').value = auctionId;
+      document.getElementById('bidAmount').value = '';
+      
+      document.getElementById('bidModal').classList.remove('hidden');
+    }
+
+    function submitBid() {
+      const auctionId = document.getElementById('auctionId').value;
+      const bidAmount = parseInt(document.getElementById('bidAmount').value);
+      const currentUser = checkLoginStatus();
+      
+      if (!auctionId || isNaN(bidAmount) || bidAmount <= 0) {
+        alert('Masukkan jumlah penawaran yang valid!');
+        return;
+      }
+      
+      const auction = getAuctionById(auctionId);
+      if (!auction) {
+        alert('Lelang tidak ditemukan!');
+        return;
+      }
+      
+      if (bidAmount <= auction.hargaAwal) {
+        alert('Penawaran harus lebih tinggi dari harga awal!');
+        return;
+      }
+      
+      if (auction.penawaranTertinggi > 0 && bidAmount <= auction.penawaranTertinggi) {
+        alert('Penawaran harus lebih tinggi dari penawaran tertinggi saat ini!');
+        return;
+      }
+      
+      // Simpan penawaran
+      const bid = {
+        id: Date.now().toString(),
+        auctionId: auctionId,
+        userId: currentUser.id,
+        username: currentUser.nama,
+        amount: bidAmount,
+        date: new Date().toISOString()
+      };
+      
+      addBid(bid);
+      
+      // Update penawaran tertinggi di lelang
+      updateAuctionHighestBid(auctionId, bidAmount, currentUser.nama);
+      
+      // Tutup modal
+      document.getElementById('bidModal').classList.add('hidden');
+      
+      // Refresh data
+      loadActiveAuctions();
+      loadBidHistory();
+      
+      alert('Penawaran berhasil dikirim!');
+    }
+
+    function loadBidHistory() {
+      const currentUser = checkLoginStatus();
+      const bids = getBids().filter(bid => bid.userId === currentUser.id);
+      const tableBody = document.getElementById('bidHistory');
+      tableBody.innerHTML = '';
+
+      if (bids.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
+            Anda belum membuat penawaran
+          </td>
+        `;
+        tableBody.appendChild(row);
+        return;
+      }
+      
+      // Urutkan dari yang terbaru
+      bids.sort((a, b) => new Date(b.date) - new Date(a.date));
+      
+      bids.forEach(bid => {
+        const auction = getAuctionById(bid.auctionId);
+        if (!auction) return;
+        
+        const isWinning = auction.status === 'ditutup' && auction.penawaranTertinggi === bid.amount && auction.penawar === currentUser.nama;
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 h-10 w-10">
+                <img class="h-10 w-10 rounded-md object-cover" src="${auction.gambar || 'assets/img/no-image.png'}" alt="${auction.namaBarang}" onerror="this.src='assets/img/no-image.png'">
+              </div>
+              <div class="ml-4">
+                <div class="text-sm font-medium text-gray-900">${auction.namaBarang}</div>
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp ${auction.hargaAwal.toLocaleString('id-ID')}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium ${isWinning ? 'text-green-600' : 'text-purple-600'}">
+            Rp ${bid.amount.toLocaleString('id-ID')}
+            ${isWinning ? '<span class="ml-2 px-2 py-0.5 bg-green-100 text-green-800 rounded-full text-xs">Menang</span>' : ''}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${auction.status === 'dibuka' ? 'bg-green-100 text-green-800' : auction.status === 'ditutup' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}">
+              ${auction.status === 'dibuka' ? 'Dibuka' : auction.status === 'ditutup' ? 'Ditutup' : 'Pending'}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(bid.date).toLocaleString('id-ID')}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+  </script>
+</body>
+</html>

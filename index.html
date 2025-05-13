@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Lelang Online - Login</title>
+  <script src="https://cdn.tailwindcss.com?v=3.4.17"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+              950: '#082f49',
+            },
+            secondary: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+              950: '#2e1065',
+            },
+            accent: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              300: '#fdba74',
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c',
+              800: '#9a3412',
+              900: '#7c2d12',
+              950: '#431407',
+            },
+          },
+          borderRadius: {
+            'xl': '1rem',
+            '2xl': '1.5rem',
+          },
+          boxShadow: {
+            'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
+            'hover': '0 10px 25px rgba(0, 0, 0, 0.1)',
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gradient-to-br from-primary-50 to-secondary-50 min-h-screen flex items-center justify-center">
+  <div class="container mx-auto px-4 py-8">
+    <div class="max-w-md mx-auto bg-white rounded-2xl shadow-soft overflow-hidden transform transition-all duration-300 hover:shadow-hover">
+      <div class="p-8">
+        <div class="flex justify-center mb-8">
+          <div class="h-20 w-20 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center shadow-md">
+            <span class="text-white text-2xl font-bold">SLO</span>
+          </div>
+        </div>
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Sistem Lelang Online</h1>
+        
+        <div id="loginForm">
+          <h2 class="text-xl font-semibold text-gray-700 mb-6">Login</h2>
+          <div class="mb-5">
+            <label for="username" class="block text-gray-700 text-sm font-medium mb-2">Username</label>
+            <input type="text" id="username" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200">
+          </div>
+          <div class="mb-6">
+            <label for="password" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+            <input type="password" id="password" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200">
+          </div>
+          <div class="flex items-center justify-between mb-6">
+            <button id="loginBtn" class="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white px-6 py-3 rounded-xl hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 font-medium">
+              Login
+            </button>
+          </div>
+          <div class="text-center">
+            <a href="#" id="showRegisterForm" class="text-primary-600 hover:text-primary-800 text-sm font-medium transition-all duration-200">Belum punya akun? Daftar</a>
+          </div>
+        </div>
+        
+        <div id="registerForm" class="hidden">
+          <h2 class="text-xl font-semibold text-gray-700 mb-6">Registrasi</h2>
+          <div class="mb-4">
+            <label for="regUsername" class="block text-gray-700 text-sm font-medium mb-2">Username</label>
+            <input type="text" id="regUsername" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-200">
+          </div>
+          <div class="mb-4">
+            <label for="regPassword" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+            <input type="password" id="regPassword" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-200">
+          </div>
+          <div class="mb-4">
+            <label for="regNama" class="block text-gray-700 text-sm font-medium mb-2">Nama Lengkap</label>
+            <input type="text" id="regNama" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-200">
+          </div>
+          <div class="mb-4">
+            <label for="regTelp" class="block text-gray-700 text-sm font-medium mb-2">Nomor Telepon</label>
+            <input type="text" id="regTelp" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-200">
+          </div>
+          <div class="mb-6">
+            <label class="block text-gray-700 text-sm font-medium mb-2">Daftar Sebagai</label>
+            <select id="regRole" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-200">
+              <option value="masyarakat">Masyarakat</option>
+              <option value="admin">Administrator</option>
+            </select>
+          </div>
+          <div class="flex items-center justify-between mb-6">
+            <button id="registerBtn" class="w-full bg-gradient-to-r from-secondary-600 to-secondary-700 text-white px-6 py-3 rounded-xl hover:from-secondary-700 hover:to-secondary-800 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 transition-all duration-200 font-medium">
+              Daftar
+            </button>
+          </div>
+          <div class="text-center">
+            <a href="#" id="showLoginForm" class="text-secondary-600 hover:text-secondary-800 text-sm font-medium transition-all duration-200">Sudah punya akun? Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

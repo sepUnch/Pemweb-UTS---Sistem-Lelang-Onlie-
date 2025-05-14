@@ -4,129 +4,286 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistem Lelang Online - Login</title>
-  <link href="assets/css/style.css" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: {
-              50: '#f0f9ff',
-              100: '#e0f2fe',
-              200: '#bae6fd',
-              300: '#7dd3fc',
-              400: '#38bdf8',
-              500: '#0ea5e9',
-              600: '#0284c7',
-              700: '#0369a1',
-              800: '#075985',
-              900: '#0c4a6e',
-              950: '#082f49',
-            },
-            secondary: {
-              50: '#f5f3ff',
-              100: '#ede9fe',
-              200: '#ddd6fe',
-              300: '#c4b5fd',
-              400: '#a78bfa',
-              500: '#8b5cf6',
-              600: '#7c3aed',
-              700: '#6d28d9',
-              800: '#5b21b6',
-              900: '#4c1d95',
-              950: '#2e1065',
-            },
-            accent: {
-              50: '#fff7ed',
-              100: '#ffedd5',
-              200: '#fed7aa',
-              300: '#fdba74',
-              400: '#fb923c',
-              500: '#f97316',
-              600: '#ea580c',
-              700: '#c2410c',
-              800: '#9a3412',
-              900: '#7c2d12',
-              950: '#431407',
-            },
-          },
-          borderRadius: {
-            'xl': '1rem',
-            '2xl': '1.5rem',
-          },
-          boxShadow: {
-            'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
-            'hover': '0 10px 25px rgba(0, 0, 0, 0.1)',
-          },
-        }
+  <style>
+    /* Reset dan Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(to bottom right, #f0f9ff, #f5f3ff);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1f2937;
+      line-height: 1.5;
+    }
+
+    /* Container Styles */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 1rem;
+      margin: 0 auto;
+    }
+
+    /* Card Styles */
+    .login-card {
+      max-width: 28rem;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transform: translateY(0);
+      transition: all 0.3s ease;
+    }
+
+    .login-card:hover {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transform: translateY(-5px);
+    }
+
+    .card-content {
+      padding: 2rem;
+    }
+
+    /* Logo Styles */
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo {
+      height: 5rem;
+      width: 5rem;
+      background: linear-gradient(to right, #0ea5e9, #8b5cf6);
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo span {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* Typography */
+    .title {
+      font-size: 1.875rem;
+      font-weight: bold;
+      text-align: center;
+      color: #1f2937;
+      margin-bottom: 1.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      color: #374151;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      transition: all 0.2s;
+      font-size: 1rem;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: transparent;
+      box-shadow: 0 0 0 2px #0ea5e9;
+    }
+
+    .form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1rem;
+      padding-right: 2.5rem;
+    }
+
+    /* Button Styles */
+    .button-container {
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.75rem;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: white;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to right, #0284c7, #0369a1);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(to right, #0369a1, #075985);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(to right, #7c3aed, #6d28d9);
+    }
+
+    .btn-secondary:hover {
+      background: linear-gradient(to right, #6d28d9, #5b21b6);
+    }
+
+    .btn-primary:focus,
+    .btn-secondary:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px white, 0 0 0 4px #0ea5e9;
+    }
+
+    /* Link Styles */
+    .text-center {
+      text-align: center;
+    }
+
+    .link-primary,
+    .link-secondary {
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .link-primary {
+      color: #0284c7;
+    }
+
+    .link-primary:hover {
+      color: #0369a1;
+    }
+
+    .link-secondary {
+      color: #7c3aed;
+    }
+
+    .link-secondary:hover {
+      color: #6d28d9;
+    }
+
+    /* Utility Classes */
+    .hidden {
+      display: none;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 640px) {
+      .card-content {
+        padding: 1.5rem;
+      }
+
+      .title {
+        font-size: 1.5rem;
+      }
+
+      .subtitle {
+        font-size: 1.125rem;
       }
     }
-  </script>
-  <link rel="stylesheet" href="css/style.css">
+  </style>
 </head>
-<body class="bg-gradient-to-br from-primary-50 to-secondary-50 min-h-screen flex items-center justify-center">
-  <div class="container mx-auto px-4 py-8">
-    <div class="max-w-md mx-auto bg-white rounded-2xl shadow-soft overflow-hidden transform transition-all duration-300 hover:shadow-hover">
-      <div class="p-8">
-        <div class="flex justify-center mb-8">
-          <div class="h-20 w-20 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center shadow-md">
-            <span class="text-white text-2xl font-bold">SLO</span>
+<body>
+  <div class="container">
+    <div class="login-card">
+      <div class="card-content">
+        <div class="logo-container">
+          <div class="logo">
+            <span>SLO</span>
           </div>
         </div>
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Sistem Lelang Online</h1>
+        <h1 class="title">Sistem Lelang Online</h1>
         
         <div id="loginForm">
-          <h2 class="text-xl font-semibold text-gray-700 mb-6">Login</h2>
-          <div class="mb-5">
-            <label for="username" class="block text-gray-700 text-sm font-medium mb-2">Username</label>
-            <input type="text" id="username" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200">
+          <h2 class="subtitle">Login</h2>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username">
           </div>
-          <div class="mb-6">
-            <label for="password" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
-            <input type="password" id="password" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200">
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password">
           </div>
-          <div class="flex items-center justify-between mb-6">
-            <button id="loginBtn" class="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white px-6 py-3 rounded-xl hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 font-medium">
+          <div class="button-container">
+            <button id="loginBtn" class="btn-primary">
               Login
             </button>
           </div>
           <div class="text-center">
-            <a href="#" id="showRegisterForm" class="text-primary-600 hover:text-primary-800 text-sm font-medium transition-all duration-200">Belum punya akun? Daftar</a>
+            <a href="#" id="showRegisterForm" class="link-primary">Belum punya akun? Daftar</a>
           </div>
         </div>
         
         <div id="registerForm" class="hidden">
-          <h2 class="text-xl font-semibold text-gray-700 mb-6">Registrasi</h2>
-          <div class="mb-4">
-            <label for="regUsername" class="block text-gray-700 text-sm font-medium mb-2">Username</label>
-            <input type="text" id="regUsername" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-200">
+          <h2 class="subtitle">Registrasi</h2>
+          <div class="form-group">
+            <label for="regUsername">Username</label>
+            <input type="text" id="regUsername">
           </div>
-          <div class="mb-4">
-            <label for="regPassword" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
-            <input type="password" id="regPassword" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-200">
+          <div class="form-group">
+            <label for="regPassword">Password</label>
+            <input type="password" id="regPassword">
           </div>
-          <div class="mb-4">
-            <label for="regNama" class="block text-gray-700 text-sm font-medium mb-2">Nama Lengkap</label>
-            <input type="text" id="regNama" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-200">
+          <div class="form-group">
+            <label for="regNama">Nama Lengkap</label>
+            <input type="text" id="regNama">
           </div>
-          <div class="mb-4">
-            <label for="regTelp" class="block text-gray-700 text-sm font-medium mb-2">Nomor Telepon</label>
-            <input type="text" id="regTelp" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-200">
+          <div class="form-group">
+            <label for="regTelp">Nomor Telepon</label>
+            <input type="text" id="regTelp">
           </div>
-          <div class="mb-6">
-            <label class="block text-gray-700 text-sm font-medium mb-2">Daftar Sebagai</label>
-            <select id="regRole" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-200">
+          <div class="form-group">
+            <label>Daftar Sebagai</label>
+            <select id="regRole">
               <option value="masyarakat">Masyarakat</option>
               <option value="admin">Administrator</option>
             </select>
           </div>
-          <div class="flex items-center justify-between mb-6">
-            <button id="registerBtn" class="w-full bg-gradient-to-r from-secondary-600 to-secondary-700 text-white px-6 py-3 rounded-xl hover:from-secondary-700 hover:to-secondary-800 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 transition-all duration-200 font-medium">
+          <div class="button-container">
+            <button id="registerBtn" class="btn-secondary">
               Daftar
             </button>
           </div>
           <div class="text-center">
-            <a href="#" id="showLoginForm" class="text-secondary-600 hover:text-secondary-800 text-sm font-medium transition-all duration-200">Sudah punya akun? Login</a>
+            <a href="#" id="showLoginForm" class="link-secondary">Sudah punya akun? Login</a>
           </div>
         </div>
       </div>
